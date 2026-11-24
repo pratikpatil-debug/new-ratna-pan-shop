@@ -1,0 +1,478 @@
+/* ==========================================================================
+   NEW RATNA PAN SHOP — ROYAL SITE OPENING ANIMATION
+   A cinematic, high-fidelity luxury brand introduction tailored to
+   Banarasi heritage, pure silver vark, and royal paan craftsmanship.
+   ========================================================================== */
+
+.royal-opening-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  background: #1A0408;
+}
+
+/* Dual Royal Silk Curtain Panels (Split Iris Exit) */
+.royal-curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: radial-gradient(circle at center, #3E1018 0%, #26070D 65%, #140306 100%);
+  z-index: 1;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.royal-curtain-left {
+  left: 0;
+  border-right: 1.5px solid rgba(230, 199, 123, 0.4);
+}
+
+.royal-curtain-right {
+  right: 0;
+  border-left: 1.5px solid rgba(230, 199, 123, 0.4);
+}
+
+/* Golden Seam Light between curtains */
+.royal-curtain-left::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, #F5D477, #E6C77B, transparent);
+  box-shadow: 0 0 15px rgba(245, 212, 119, 0.8);
+}
+
+/* Curtain Parting Animation */
+.royal-opening-overlay.dismissing .royal-curtain-left {
+  transform: translateX(-100%);
+}
+
+.royal-opening-overlay.dismissing .royal-curtain-right {
+  transform: translateX(100%);
+}
+
+.royal-opening-overlay.dismissing .royal-opening-stage {
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 0.5s ease-out, transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Ambient Indian Jali Lattice / Mandala Watermark */
+.royal-jali-pattern {
+  position: absolute;
+  inset: -20%;
+  width: 140%;
+  height: 140%;
+  background-image: radial-gradient(rgba(230, 199, 123, 0.08) 1.5px, transparent 1.5px),
+                    radial-gradient(rgba(230, 199, 123, 0.04) 1.5px, transparent 1.5px);
+  background-size: 32px 32px, 64px 64px;
+  background-position: 0 0, 16px 16px;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: jaliRotate 120s linear infinite;
+  z-index: 2;
+}
+
+@keyframes jaliRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ambient Radial Glow */
+.royal-ambient-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 27, 37, 0.85) 0%, rgba(62, 16, 24, 0.4) 45%, transparent 70%);
+  filter: blur(40px);
+  z-index: 2;
+  pointer-events: none;
+  animation: ambientBreathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreathe {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 0.9; }
+}
+
+/* Golden Stardust Particles */
+.royal-stardust-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Central Stage Container */
+.royal-opening-stage {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 680px;
+  padding: 2rem 1.5rem;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: stageEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes stageEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Emblem Wrapper with Radiating Aura */
+.royal-emblem-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Pulsing Golden Aura Rings */
+.royal-pulse-ring {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 199, 123, 0.4);
+  animation: ringPulse 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.royal-pulse-ring:nth-child(2) {
+  inset: -30px;
+  border-color: rgba(230, 199, 123, 0.2);
+  animation-delay: 0.7s;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.25);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Rotating Filigree Mandala Ring */
+.royal-mandala-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: mandalaSpin 40s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes mandalaSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Center Emblem Platter (Brass / Gold Rim with Velvet Core) */
+.royal-emblem-core {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2D864E 0%, #16532B 65%, #0B3319 100%);
+  border: 2px solid #E6C77B;
+  box-shadow: 0 0 35px rgba(230, 199, 123, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: perspective(600px) rotateX(10deg);
+  animation: emblemFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes emblemFloat {
+  0% { transform: perspective(600px) rotateX(8deg) translateY(-2px); }
+  100% { transform: perspective(600px) rotateX(12deg) translateY(4px); }
+}
+
+/* Betel Leaf SVG Glow & Vein Animation */
+.royal-leaf-svg {
+  width: 62px;
+  height: 62px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.royal-leaf-vein {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawVeins 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+@keyframes drawVeins {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Crown at the Peak */
+.royal-crown-crest {
+  position: absolute;
+  top: -16px;
+  color: #F5D477;
+  filter: drop-shadow(0 0 10px rgba(245, 212, 119, 0.9));
+  animation: crownBob 3s ease-in-out infinite alternate;
+}
+
+@keyframes crownBob {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-3px) scale(1.05); }
+}
+
+/* Micro Header Tag */
+.royal-opening-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #E6C77B;
+  margin-bottom: 0.75rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.4s forwards;
+}
+
+/* Brand Title — Grand Royal Serif with Gold Foil Shimmer */
+.royal-opening-title {
+  font-family: 'Cinzel', 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #FFF6D6 0%, #F5D477 30%, #E6C77B 60%, #CFA848 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: foilShimmer 3.5s linear infinite;
+  filter: drop-shadow(0 2px 14px rgba(230, 199, 123, 0.35));
+}
+
+@keyframes foilShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Subtitle & Traditional Filigree Ornamentation */
+.royal-opening-sub {
+  font-size: clamp(0.78rem, 2vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #D6C29E;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.6s forwards;
+}
+
+.royal-fleuron-line {
+  height: 1px;
+  width: 40px;
+  background: linear-gradient(to right, transparent, #E6C77B, transparent);
+}
+
+/* Sensory Highlights Pills */
+.royal-sensory-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 0.8s forwards;
+}
+
+.royal-sensory-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(100, 27, 37, 0.4);
+  border: 1px solid rgba(230, 199, 123, 0.3);
+  color: #FAF4E4;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(8px);
+}
+
+.royal-sensory-pill span {
+  color: #E6C77B;
+}
+
+/* Progress & Unfolding Ticker */
+.royal-opening-footer {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 1s forwards;
+}
+
+.royal-progress-track {
+  width: 100%;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.royal-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #247A45 0%, #E6C77B 60%, #F5D477 100%);
+  border-radius: 999px;
+  transition: width 0.12s linear;
+  box-shadow: 0 0 10px rgba(245, 212, 119, 0.7);
+}
+
+.royal-status-ticker {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #BDB1A3;
+  min-height: 1.2rem;
+  font-style: italic;
+}
+
+/* Skip / Enter Action Pill */
+.royal-skip-btn {
+  position: absolute;
+  top: 1.75rem;
+  right: 1.75rem;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(230, 199, 123, 0.4);
+  color: #E6C77B;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+}
+
+.royal-skip-btn:hover {
+  background: rgba(230, 199, 123, 0.18);
+  border-color: #F5D477;
+  color: #FFFFFF;
+  box-shadow: 0 0 15px rgba(230, 199, 123, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Generic Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .royal-opening-stage {
+    padding: 1.5rem 1rem;
+  }
+  .royal-emblem-wrap {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 1rem;
+  }
+  .royal-emblem-core {
+    width: 82px;
+    height: 82px;
+  }
+  .royal-leaf-svg {
+    width: 48px;
+    height: 48px;
+  }
+  .royal-opening-title {
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+  }
+  .royal-opening-sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+  }
+  .royal-sensory-badges {
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .royal-sensory-pill {
+    font-size: 0.68rem;
+    padding: 0.25rem 0.65rem;
+  }
+  .royal-skip-btn {
+    top: 1rem;
+    right: 1rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .royal-opening-overlay {
+    transition: opacity 0.2s linear !important;
+  }
+  .royal-curtain,
+  .royal-opening-stage,
+  .royal-jali-pattern,
+  .royal-ambient-glow,
+  .royal-emblem-core,
+  .royal-leaf-vein,
+  .royal-crown-crest,
+  .royal-pulse-ring,
+  .royal-mandala-ring {
+    animation: none !important;
+    transition: none !important;
+  }
+}

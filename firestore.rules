@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Check if user is authenticated and registered as an Admin
+    function isAdmin() {
+      return request.auth != null && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.admin == true
+      );
+    }
+
+    // 1. PRODUCTS COLLECTION
+    // Public can read products menu
+    // Admin has full control over all product fields
+    // Checkout transactions can atomically update stockQuantity
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin() || (
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['stockQuantity', 'updatedAt', 'updatedAtTimestamp']) &&
+        request.resource.data.stockQuantity is int &&
+        request.resource.data.stockQuantity >= 0
+      );
+    }
+
+    // 2. COUNTERS COLLECTION (for atomic sequential token numbering #1001, #1002...)
+    // Anyone placing an order can increment the counter in a transaction
+    match /counters/{counterId} {
+      allow read: if true;
+      allow write: if request.resource.data.lastToken is int &&
+                     request.resource.data.lastToken >= 1000;
+    }
+
+    // 3. ORDERS COLLECTION
+    match /orders/{orderId} {
+      // Admin has full access to read and update orders
+      allow read, update, delete: if isAdmin();
+
+      // Customers can read their specific order by ID/token
+      allow read: if true;
+
+      // Customer can create a new order with 'received' or 'placed' status and valid fields
+      allow create: if (request.resource.data.status in ['placed', 'received']) &&
+                       request.resource.data.customerName is string &&
+                       request.resource.data.items is list;
+    }
+
+    // 4. OFFERS COLLECTION
+    // Public can read active offers for discount calculations
+    // Only Admin can create, update, or delete offers
+    match /offers/{offerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 5. COMMISSIONS COLLECTION (Internal App Owner financial ledger)
+    // Strictly Admin only
+    match /commissions/{commissionId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 6. COMMISSION SETTLEMENTS & PAYMENTS COLLECTIONS
+    // Strictly Admin only
+    match /commissionSettlements/{settlementId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /commissionPayments/{paymentId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 7. ADMINS COLLECTION
+    // Only authenticated admins can read admin privileges
+    match /admins/{adminId} {
+      allow read: if request.auth != null && request.auth.uid == adminId;
+      allow write: if false; // Managed via Firebase Console or Admin SDK
+    }
+  }
+}
